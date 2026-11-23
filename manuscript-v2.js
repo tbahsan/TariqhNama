@@ -34,21 +34,76 @@
   /* ==========================================================================
      Robust Search Engine (Tokenization, Inflection Stripping & Phonetics)
      ========================================================================== */
+  const HISTORICAL_SYNONYMS = [
+    ['উসমান', 'ওসমান', 'উসমানীয়', 'ওসমানিয়া', 'উসমানি', 'ওসমানি', 'অটোমান', 'অটোম্যান', 'uthman', 'osman', 'ottoman'],
+    ['মুহাম্মদ', 'মোহাম্মদ', 'মুহম্মদ', 'মোহাম্মাদ', 'মহম্মদ', 'নবী', 'রাসুল', 'রাসূল', 'muhammad', 'mohammad'],
+    ['উমর', 'ওমর', 'ফারুক', 'ফারূক', 'umar', 'omar'],
+    ['আলী', 'আলি', 'মর্তুজা', 'মোরতজা', 'ali'],
+    ['আবু বকর', 'আবু বকর সিদ্দিক', 'আবুবকর', 'abu bakr'],
+    ['হুসাইন', 'হোসেন', 'হোসাইন', 'হুসেন', 'husayn', 'hussain', 'hossein'],
+    ['হাসান', 'হাসেন', 'hasan', 'hassan'],
+    ['মুয়াবিয়া', 'মোয়াবিয়া', 'মুআবিয়া', 'মুয়াবিয়া', 'মোয়াবিয়া', 'muawiya', 'muawiyah'],
+    ['খাদিজা', 'খদিজা', 'খাদীজা', 'khadijah', 'khadija'],
+    ['আয়েশা', 'আয়িশা', 'আয়েশা', 'আইশা', 'ayesha', 'aisha'],
+    ['ফাতিমা', 'ফাতেমা', 'fatima'],
+    ['সালাহুদ্দিন', 'সালাহউদ্দিন', 'সালাহউদ্দীন', 'সালাহুদ্দীন', 'আইয়ুবী', 'আইয়ূবী', 'আইয়ুবি', 'আইউবী', 'saladin', 'salahuddin', 'ayyubid'],
+    ['তারেক', 'তারিক', 'তারিক বিন জিয়াদ', 'তারিক ইবন জিয়াদ', 'tariq'],
+    ['খালেদ', 'খালিদ', 'খালিদ বিন ওয়ালিদ', 'সাইফুল্লাহ', 'khalid'],
+    ['ইবনে সিনা', 'ইবন সিনা', 'avicenna', 'ibn sina', 'বোয়ালী সিনা'],
+    ['ইবনে রুশদ', 'ইবন রুশদ', 'averroes', 'ibn rushd'],
+    ['ইবনে খালদুন', 'ইবন খালদুন', 'ibn khaldun'],
+    ['ইবনে বাতুতা', 'ইবন বতুতা', 'ibn battuta'],
+    ['আল-বেরুনি', 'আল বিরুনি', 'আল বেরুনী', 'আল-বিরুনী', 'al-biruni', 'biruni'],
+    ['বুখারি', 'বোখারি', 'বুখারী', 'বোখারী', 'bukhari'],
+    ['কুরআন', 'কোরআন', 'কোরান', 'কুরান', 'quran', 'koran'],
+    ['মক্কা', 'মক্কার', 'হিজাজ', 'mecca', 'makkah'],
+    ['মদিনা', 'মদীনা', 'মদিনার', 'ইয়াসরিব', 'medina', 'madinah'],
+    ['দামেস্ক', 'দিমাশক', 'দামাস্কাস', 'damascus'],
+    ['বাগদাদ', 'বাগদাদের', 'darussalam', 'baghdad'],
+    ['কর্ডোভা', 'কোরদোবা', 'কোরদোভা', 'কর্ডোবা', 'আন্দালুস', 'আন্দালুসিয়া', 'স্পেন', 'cordoba', 'andalus', 'spain'],
+    ['জেরুজালেম', 'বায়তুল মুকাদ্দাস', 'বাইতুল মুকাদ্দাস', 'কুদ্স', 'আল-কুদস', 'আকসা', 'jerusalem', 'quds'],
+    ['কনস্টান্টিনোপল', 'ইস্তাম্বুল', 'ইস্তানবুল', 'কুসতুনতুনিয়া', 'বাইজেন্টাইন', 'constantinople', 'istanbul'],
+    ['তিতুমীর', 'তিতুমির', 'বাঁশের কেল্লা', 'বাশের কেল্লা', 'বারাসাত', 'titumir'],
+    ['সিরাজউদ্দৌলা', 'সিরাজউদ্দৌলাহ', 'সিরাজ উদ দৌলা', 'সিরাজ', 'পলাশী', 'palashi', 'siraj'],
+    ['গৌড়', 'গৌড়', 'লক্ষণাবতী', 'gaur', 'lakhnauti'],
+    ['সেলজুক', 'সালজুক', 'সেলজুকীয়', 'সালজুকী', 'seljuk'],
+    ['আব্বাসীয়', 'আব্বাসী', 'আব্বাসি', 'abbasid'],
+    ['উমাইয়া', 'উমাইয়্যা', 'ওমাইয়া', 'umayyad'],
+    ['খলিফা', 'খেলাফত', 'খিলাফত', 'caliph', 'caliphate'],
+    ['এরতুগ্রুল', 'আরতুগ্রুল', 'এরতুগরুল', 'আর্তুরুল', 'ertugrul'],
+    ['বখতিয়ার', 'ইখতিয়ার', 'বখতিয়ার খলজি', 'খলজি', 'khalji'],
+    ['বারো ভূঁইয়া', 'বারো ভূঁইয়া', 'ঈসা খাঁ', 'ইসা খাঁ', 'baro bhuiyan']
+  ];
+
   function normalizeBanglaPhonetics(s) {
     if (!s) return '';
     let res = String(s).toLocaleLowerCase().trim();
+    // Normalize Unicode Yya (precomposed \u09df and decomposed \u09af\u09bc)
+    res = res.replace(/\u09df/g, 'য').replace(/\u09af\u09bc/g, 'য');
+    // Independent vowels following consonants into dependent kar: হউ -> হু, দউ -> দু, ইত্যাদি
+    res = res.replace(/([ক-হ])উ/g, '$1ু');
+    res = res.replace(/([ক-হ])ই/g, '$1ি');
+    // Double conjunct consonants collapsing: ম্ম->ম, দ্দ->দ, ব্ব->ব, ত্ত->ত, ন্ন->ন, জ্জ->জ, চ্চ->চ, ল্ল->ল, ক্ক->ক
+    res = res.replace(/([ক-হ])্\1/g, '$1');
+    // Vowel & Consonant phonetic equivalences
     res = res.replace(/[ীি]/g, 'ি');
     res = res.replace(/[ূু]/g, 'ু');
     res = res.replace(/[শষস]/g, 'স');
     res = res.replace(/[ণন]/g, 'ন');
-    res = res.replace(/য়/g, 'য');
-    res = res.replace(/আর্তুরুল|আরতুগ্রুল|এরতুগরুল|ertugrul/g, 'এরতুগ্রুল');
+    res = res.replace(/[ৎত]/g, 'ত');
+    res = res.replace(/[ঢ়ড়র]/g, 'র');
+    res = res.replace(/[ঈই]/g, 'ই');
+    res = res.replace(/[উও]/g, 'উ');
+    res = res.replace(/[যজ]/g, 'জ');
+    res = res.replace(/[োু]/g, 'ু');
+    // Strip punctuation, brackets, honorific indicators, and hyphens
+    res = res.replace(/[ঃ\(\)\.।,!?\-—–'"\/]/g, '');
     return res;
   }
 
   function getStems(word) {
     const stems = [word];
-    const suffixes = ['দেরকে', 'দের', 'য়ের', 'ের', 'কে', 'তে', 'র', 'এ', 'গুলো', 'গুলি'];
+    const suffixes = ['দেরকে', 'দের', 'খানা', 'খানি', 'গুলো', 'গুলি', 'য়ের', 'ের', 'িয়া', 'িয়', 'ীয়', 'কে', 'তে', 'র', 'এ', 'ে', 'য়'];
     for (const suf of suffixes) {
       if (word.endsWith(suf) && word.length - suf.length >= 2) {
         stems.push(word.slice(0, -suf.length));
@@ -60,51 +115,35 @@
 
   function extractSearchTokens(query) {
     const raw = String(query).trim().toLocaleLowerCase();
-    const rawTokens = raw.split(/[\s,।\-\.\?\!]+/).filter(t => t.length >= 2);
+    const rawClean = raw.replace(/[ঃ\(\)\.।,!?\-—–'"\/]/g, ' ');
+    const rawTokens = rawClean.split(/\s+/).filter(t => t.length >= 2);
     const tokenSet = new Set(rawTokens);
+
     for (const t of rawTokens) {
       for (const st of getStems(t)) {
         tokenSet.add(st);
-        tokenSet.add(normalizeBanglaPhonetics(st));
+        const normSt = normalizeBanglaPhonetics(st);
+        if (normSt) tokenSet.add(normSt);
       }
     }
-    return { raw, tokens: [...tokenSet], rawNorm: normalizeBanglaPhonetics(raw) };
-  }
 
-  /* ==========================================================================
-     Query Aliases and Normalization (Transliteration support)
-     ========================================================================== */
-  const ALIAS_RULES = [
-    { pattern: /\u0986\u09b0\u09cd\u09a4\u09c1\u09b0\u09c1\u09b2|\u0986\u09b0\u09a4\u09c1\u0997\u09cd\u09b0\u09c1\u09b2|\u098f\u09b0\u09a4\u09c1\u0997\u09b0\u09c1\u09b2|ertugrul/gi, repl: '\u098f\u09b0\u09a4\u09c1\u0997\u09cd\u09b0\u09c1\u09b2' },
-    { pattern: /\u0997\u09be\u099c\u09bf/gi, repl: '\u0997\u09be\u099c\u09c0' },
-    { pattern: /\u0989\u09b8\u09ae\u09be\u09a8\u09bf/gi, repl: '\u0989\u09b8\u09ae\u09be\u09a8\u09c0\u09af\u09bc' },
-    { pattern: /\u09a4\u09c1\u09b0\u09cd\u0995\u09c0/gi, repl: '\u09a4\u09c1\u09b0\u09cd\u0995\u09bf' },
-    { pattern: /\u0995\u09b0\u09a1\u09cb\u09ad\u09be|\u0995\u09cb\u09b0\u09a6\u09cb\u09ac\u09be/gi, repl: '\u0995\u09b0\u09cd\u09a1\u09cb\u09ad\u09be' },
-    { pattern: /\u09ac\u0996\u09a4\u09bf\u09af\u09bc\u09be\u09b0|\u0987\u0996\u09a4\u09bf\u09af\u09bc\u09be\u09b0/gi, repl: '\u09ac\u0996\u09a4\u09bf\u09af\u09bc\u09be\u09b0' }
-  ];
-
-  function getQueryVariants(raw) {
-    if (!raw) return [];
-    const base = raw.trim().toLocaleLowerCase();
-    const set = new Set([base]);
-    let normalized = base;
-    for (const rule of ALIAS_RULES) {
-      if (rule.pattern.test(base)) {
-        normalized = normalized.replace(rule.pattern, rule.repl);
-        set.add(normalized);
-      }
-    }
-    base.split(/\s+/).forEach(t => {
-      if (t.length >= 2) {
-        set.add(t);
-        for (const rule of ALIAS_RULES) {
-          if (rule.pattern.test(t)) {
-            set.add(t.replace(rule.pattern, rule.repl));
-          }
+    // Expand historical synonyms / aliases
+    for (const group of HISTORICAL_SYNONYMS) {
+      const match = group.some(syn => {
+        const synNorm = normalizeBanglaPhonetics(syn);
+        return raw.includes(syn) || rawTokens.includes(syn) ||
+               tokenSet.has(syn) || tokenSet.has(synNorm);
+      });
+      if (match) {
+        for (const syn of group) {
+          tokenSet.add(syn);
+          const synNorm = normalizeBanglaPhonetics(syn);
+          if (synNorm) tokenSet.add(synNorm);
         }
       }
-    });
-    return [...set];
+    }
+
+    return { raw, tokens: [...tokenSet], rawNorm: normalizeBanglaPhonetics(raw) };
   }
 
   let personMap = new Map(), placeMap = new Map(), sourceMap = new Map(), eventMap = new Map();
@@ -518,7 +557,12 @@
     for (const event of events) {
       const hay = eventSearchText(event);
       const hayNorm = normalizeBanglaPhonetics(hay);
+      const titleNorm = normalizeBanglaPhonetics(event.title);
       let score = 0;
+      if (event.title.toLocaleLowerCase().includes(raw)) score += 500;
+      else if (rawNorm && titleNorm.includes(rawNorm)) score += 400;
+      else if (tokens.some(t => event.title.toLocaleLowerCase().includes(t) || (titleNorm && titleNorm.includes(t)))) score += 250;
+
       if (hay.includes(raw)) score += 100;
       else if (hayNorm.includes(rawNorm)) score += 80;
       const tm = tokens.filter(t => hay.includes(t) || hayNorm.includes(t)).length;
@@ -530,7 +574,12 @@
     for (const person of people) {
       const hay = [person.name, person.also, person.life, person.role, person.bio, person.lineage, person.region, person.group, ...(person.works || [])].join(' ').toLocaleLowerCase();
       const hayNorm = normalizeBanglaPhonetics(hay);
+      const nameNorm = normalizeBanglaPhonetics(person.name);
       let score = 0;
+      if (person.name.toLocaleLowerCase().includes(raw)) score += 500;
+      else if (rawNorm && nameNorm.includes(rawNorm)) score += 400;
+      else if (tokens.some(t => person.name.toLocaleLowerCase().includes(t) || (nameNorm && nameNorm.includes(t)))) score += 250;
+
       if (hay.includes(raw)) score += 100;
       else if (hayNorm.includes(rawNorm)) score += 80;
       const tm = tokens.filter(t => hay.includes(t) || hayNorm.includes(t)).length;
@@ -542,7 +591,12 @@
     for (const place of places) {
       const hay = [place.name, place.modern, place.description].join(' ').toLocaleLowerCase();
       const hayNorm = normalizeBanglaPhonetics(hay);
+      const placeNameNorm = normalizeBanglaPhonetics(place.name);
       let score = 0;
+      if (place.name.toLocaleLowerCase().includes(raw)) score += 500;
+      else if (rawNorm && placeNameNorm.includes(rawNorm)) score += 400;
+      else if (tokens.some(t => place.name.toLocaleLowerCase().includes(t) || (placeNameNorm && placeNameNorm.includes(t)))) score += 250;
+
       if (hay.includes(raw)) score += 100;
       else if (hayNorm.includes(rawNorm)) score += 80;
       const tm = tokens.filter(t => hay.includes(t) || hayNorm.includes(t)).length;
@@ -686,7 +740,12 @@
     for (const e of events) {
       const hay = eventSearchText(e);
       const hayNorm = normalizeBanglaPhonetics(hay);
+      const titleNorm = normalizeBanglaPhonetics(e.title);
       let score = 0;
+      if (e.title.toLocaleLowerCase().includes(raw)) score += 500;
+      else if (rawNorm && titleNorm.includes(rawNorm)) score += 400;
+      else if (tokens.some(t => e.title.toLocaleLowerCase().includes(t) || (titleNorm && titleNorm.includes(t)))) score += 250;
+
       if (hay.includes(raw)) score += 100;
       else if (hayNorm.includes(rawNorm)) score += 80;
       let tokenMatches = 0;
@@ -704,7 +763,12 @@
     for (const p of people) {
       const hay = [p.name, p.also, p.life, p.role, p.bio, p.lineage, p.region, p.group, ...(p.works || [])].join(' ').toLocaleLowerCase();
       const hayNorm = normalizeBanglaPhonetics(hay);
+      const nameNorm = normalizeBanglaPhonetics(p.name);
       let score = 0;
+      if (p.name.toLocaleLowerCase().includes(raw)) score += 500;
+      else if (rawNorm && nameNorm.includes(rawNorm)) score += 400;
+      else if (tokens.some(t => p.name.toLocaleLowerCase().includes(t) || (nameNorm && nameNorm.includes(t)))) score += 250;
+
       if (hay.includes(raw)) score += 100;
       else if (hayNorm.includes(rawNorm)) score += 80;
       let tokenMatches = 0;
@@ -722,7 +786,12 @@
     for (const pl of places) {
       const hay = [pl.name, pl.modern, pl.description].join(' ').toLocaleLowerCase();
       const hayNorm = normalizeBanglaPhonetics(hay);
+      const placeNameNorm = normalizeBanglaPhonetics(pl.name);
       let score = 0;
+      if (pl.name.toLocaleLowerCase().includes(raw)) score += 500;
+      else if (rawNorm && placeNameNorm.includes(rawNorm)) score += 400;
+      else if (tokens.some(t => pl.name.toLocaleLowerCase().includes(t) || (placeNameNorm && placeNameNorm.includes(t)))) score += 250;
+
       if (hay.includes(raw)) score += 100;
       else if (hayNorm.includes(rawNorm)) score += 80;
       let tokenMatches = 0;
@@ -742,7 +811,12 @@
         for (const cand of domain.key_candidate_events || []) {
           const candText = [cand.topic, domain.title, domain.source_book].join(' ').toLocaleLowerCase();
           const candNorm = normalizeBanglaPhonetics(candText);
+          const topicNorm = normalizeBanglaPhonetics(cand.topic);
           let score = 0;
+          if (cand.topic.toLocaleLowerCase().includes(raw)) score += 500;
+          else if (rawNorm && topicNorm.includes(rawNorm)) score += 400;
+          else if (tokens.some(t => cand.topic.toLocaleLowerCase().includes(t) || (topicNorm && topicNorm.includes(t)))) score += 250;
+
           if (candText.includes(raw) || candNorm.includes(rawNorm)) score += 100;
           let tokenMatches = 0;
           for (const t of tokens) {
@@ -1194,10 +1268,18 @@
     if (!ui.peopleSearch || !ui.peopleList) return;
     const needle = ui.peopleSearch.value.trim().toLocaleLowerCase();
     const group = ui.peopleGroup ? ui.peopleGroup.value : 'all';
+    const needleTokens = needle ? extractSearchTokens(needle).tokens : [];
+    const needleNorm = needle ? normalizeBanglaPhonetics(needle) : '';
+
     const result = people.filter(person => {
+      if (group !== 'all' && person.group !== group) return false;
+      if (!needle) return true;
       const text = [person.name, person.also, person.life, person.role, person.bio, person.lineage, person.region, person.group, ...(person.works || [])]
         .join(' ').toLocaleLowerCase();
-      return (group === 'all' || person.group === group) && (!needle || text.includes(needle));
+      if (text.includes(needle)) return true;
+      const textNorm = normalizeBanglaPhonetics(text);
+      if (needleNorm && textNorm.includes(needleNorm)) return true;
+      return needleTokens.some(t => text.includes(t) || (textNorm && textNorm.includes(t)));
     }).sort((a, b) => (ui.peopleSort && ui.peopleSort.value === 'name')
       ? a.name.localeCompare(b.name, 'bn') : (a.id === 'muhammad' ? -1 : b.id === 'muhammad' ? 1 : (a.sortYear || 9999) - (b.sortYear || 9999)));
 
@@ -1366,8 +1448,17 @@
   function renderPlaces() {
     if (!ui.placeSearch || !ui.placeList) return;
     const needle = ui.placeSearch.value.trim().toLocaleLowerCase();
-    const result = places.filter(place => !needle || [place.name, place.modern, place.description].join(' ').toLocaleLowerCase().includes(needle))
-      .sort((a, b) => a.name.localeCompare(b.name, 'bn'));
+    const needleTokens = needle ? extractSearchTokens(needle).tokens : [];
+    const needleNorm = needle ? normalizeBanglaPhonetics(needle) : '';
+
+    const result = places.filter(place => {
+      if (!needle) return true;
+      const text = [place.name, place.modern, place.description].join(' ').toLocaleLowerCase();
+      if (text.includes(needle)) return true;
+      const textNorm = normalizeBanglaPhonetics(text);
+      if (needleNorm && textNorm.includes(needleNorm)) return true;
+      return needleTokens.some(t => text.includes(t) || (textNorm && textNorm.includes(t)));
+    }).sort((a, b) => a.name.localeCompare(b.name, 'bn'));
     if (ui.placeResult) ui.placeResult.textContent = `${bn(result.length)}টি স্থান · নাম বেছে পড়ুন`;
     if (!result.some(p => p.id === activePlaceId)) activePlaceId = result[0]?.id || null;
     ui.placeList.innerHTML = result.length ? result.map((place, i) =>

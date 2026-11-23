@@ -18,6 +18,111 @@
     context: 'প্রেক্ষাপট'
   };
 
+  const HISTORICAL_SYNONYMS = [
+    ['উসমান', 'ওসমান', 'উসমানীয়', 'ওসমানিয়া', 'উসমানি', 'ওসমানি', 'অটোমান', 'অটোম্যান', 'uthman', 'osman', 'ottoman'],
+    ['মুহাম্মদ', 'মোহাম্মদ', 'মুহম্মদ', 'মোহাম্মাদ', 'মহম্মদ', 'নবী', 'রাসুল', 'রাসূল', 'muhammad', 'mohammad'],
+    ['উমর', 'ওমর', 'ফারুক', 'ফারূক', 'umar', 'omar'],
+    ['আলী', 'আলি', 'মর্তুজা', 'মোরতজা', 'ali'],
+    ['আবু বকর', 'আবু বকর সিদ্দিক', 'আবুবকর', 'abu bakr'],
+    ['হুসাইন', 'হোসেন', 'হোসাইন', 'হুসেন', 'husayn', 'hussain', 'hossein'],
+    ['হাসান', 'হাসেন', 'hasan', 'hassan'],
+    ['মুয়াবিয়া', 'মোয়াবিয়া', 'মুআবিয়া', 'মুয়াবিয়া', 'মোয়াবিয়া', 'muawiya', 'muawiyah'],
+    ['খাদিজা', 'খদিজা', 'খাদীজা', 'khadijah', 'khadija'],
+    ['আয়েশা', 'আয়িশা', 'আয়েশা', 'আইশা', 'ayesha', 'aisha'],
+    ['ফাতিমা', 'ফাতেমা', 'fatima'],
+    ['সালাহুদ্দিন', 'সালাহউদ্দিন', 'সালাহউদ্দীন', 'সালাহুদ্দীন', 'আইয়ুবী', 'আইয়ূবী', 'আইয়ুবি', 'saladin', 'salahuddin', 'ayyubid'],
+    ['তারেক', 'তারিক', 'তারিক বিন জিয়াদ', 'তারিক ইবন জিয়াদ', 'tariq'],
+    ['খালেদ', 'খালিদ', 'খালিদ বিন ওয়ালিদ', 'সাইফুল্লাহ', 'khalid'],
+    ['ইবনে সিনা', 'ইবন সিনা', 'avicenna', 'ibn sina'],
+    ['ইবনে রুশদ', 'ইবন রুশদ', 'averroes', 'ibn rushd'],
+    ['ইবনে খালদুন', 'ইবন খালদুন', 'ibn khaldun'],
+    ['ইবনে বাতুতা', 'ইবন বতুতা', 'ibn battuta'],
+    ['বুখারি', 'বোখারি', 'বুখারী', 'বোখারী', 'bukhari'],
+    ['কুরআন', 'কোরআন', 'কোরান', 'কুরান', 'quran', 'koran'],
+    ['মক্কা', 'মক্কার', 'mecca', 'makkah'],
+    ['মদিনা', 'মদীনা', 'মদিনার', 'ইয়াসরিব', 'medina', 'madinah'],
+    ['দামেস্ক', 'দিমাশক', 'দামাস্কাস', 'damascus'],
+    ['বাগদাদ', 'বাগদাদের', 'baghdad'],
+    ['কর্ডোভা', 'কোরদোবা', 'কোরদোভা', 'কর্ডোবা', 'আন্দালুস', 'আন্দালুসিয়া', 'স্পেন', 'cordoba', 'andalus', 'spain'],
+    ['জেরুজালেম', 'বায়তুল মুকাদ্দাস', 'বাইতুল মুকাদ্দাস', 'কুদ্স', 'আল-কুদস', 'jerusalem', 'quds'],
+    ['কনস্টান্টিনোপল', 'ইস্তাম্বুল', 'ইস্তানবুল', 'কুসতুনতুনিয়া', 'constantinople', 'istanbul'],
+    ['তিতুমীর', 'তিতুমির', 'বাঁশের কেল্লা', 'বাশের কেল্লা', 'বারাসাত', 'titumir'],
+    ['সিরাজউদ্দৌলা', 'সিরাজউদ্দৌলাহ', 'সিরাজ উদ দৌলা', 'সিরাজ', 'পলাশী', 'palashi', 'siraj'],
+    ['গৌড়', 'গৌড়', 'লক্ষণাবতী', 'gaur', 'lakhnauti'],
+    ['সেলজুক', 'সালজুক', 'সেলজুকীয়', 'seljuk'],
+    ['আব্বাসীয়', 'আব্বাসী', 'আব্বাসি', 'abbasid'],
+    ['উমাইয়া', 'উমাইয়্যা', 'ওমাইয়া', 'umayyad'],
+    ['খলিফা', 'খেলাফত', 'খিলাফত', 'caliph', 'caliphate'],
+    ['এরতুগ্রুল', 'আরতুগ্রুল', 'এরতুগরুল', 'আর্তুরুল', 'ertugrul'],
+    ['বখতিয়ার', 'ইখতিয়ার', 'বখতিয়ার খলজি', 'খলজি', 'khalji'],
+    ['বারো ভূঁইয়া', 'বারো ভূঁইয়া', 'ঈসা খাঁ', 'ইসা খাঁ', 'baro bhuiyan']
+  ];
+
+  function normalizeBanglaPhonetics(s) {
+    if (!s) return '';
+    let res = String(s).toLocaleLowerCase().trim();
+    res = res.replace(/\u09df/g, 'য').replace(/\u09af\u09bc/g, 'য');
+    res = res.replace(/([ক-হ])উ/g, '$1ু');
+    res = res.replace(/([ক-হ])ই/g, '$1ি');
+    res = res.replace(/([ক-হ])্\1/g, '$1');
+    res = res.replace(/[ীি]/g, 'ি');
+    res = res.replace(/[ূু]/g, 'ু');
+    res = res.replace(/[শষস]/g, 'স');
+    res = res.replace(/[ণন]/g, 'ন');
+    res = res.replace(/[ৎত]/g, 'ত');
+    res = res.replace(/[ঢ়ড়র]/g, 'র');
+    res = res.replace(/[ঈই]/g, 'ই');
+    res = res.replace(/[উও]/g, 'উ');
+    res = res.replace(/[যজ]/g, 'জ');
+    res = res.replace(/[োু]/g, 'ু');
+    res = res.replace(/[ঃ\(\)\.।,!?\-—–'"\/]/g, '');
+    return res;
+  }
+
+  function getStems(word) {
+    const stems = [word];
+    const suffixes = ['দেরকে', 'দের', 'খানা', 'খানি', 'গুলো', 'গুলি', 'য়ের', 'ের', 'িয়া', 'িয়', 'ীয়', 'কে', 'তে', 'র', 'এ', 'ে', 'য়'];
+    for (const suf of suffixes) {
+      if (word.endsWith(suf) && word.length - suf.length >= 2) {
+        stems.push(word.slice(0, -suf.length));
+        break;
+      }
+    }
+    return stems;
+  }
+
+  function extractSearchTokens(query) {
+    const raw = String(query).trim().toLocaleLowerCase();
+    const rawClean = raw.replace(/[ঃ\(\)\.।,!?\-—–'"\/]/g, ' ');
+    const rawTokens = rawClean.split(/\s+/).filter(t => t.length >= 2);
+    const tokenSet = new Set(rawTokens);
+
+    for (const t of rawTokens) {
+      for (const st of getStems(t)) {
+        tokenSet.add(st);
+        const normSt = normalizeBanglaPhonetics(st);
+        if (normSt) tokenSet.add(normSt);
+      }
+    }
+
+    for (const group of HISTORICAL_SYNONYMS) {
+      const match = group.some(syn => {
+        const synNorm = normalizeBanglaPhonetics(syn);
+        return raw.includes(syn) || rawTokens.includes(syn) ||
+               tokenSet.has(syn) || tokenSet.has(synNorm);
+      });
+      if (match) {
+        for (const syn of group) {
+          tokenSet.add(syn);
+          const synNorm = normalizeBanglaPhonetics(syn);
+          if (synNorm) tokenSet.add(synNorm);
+        }
+      }
+    }
+
+    return { raw, tokens: [...tokenSet], rawNorm: normalizeBanglaPhonetics(raw) };
+  }
+
   let events = [], people = [], places = [], sources = [];
   let placeMap = new Map(), personMap = new Map(), eventMap = new Map();
   let leafletMap = null, markerGroup = null, markersByPlaceId = new Map();
@@ -275,6 +380,7 @@
   function getFilteredEvents() {
     const term = els.search ? els.search.value.trim().toLocaleLowerCase() : '';
     const maxYear = els.yearSlider ? +els.yearSlider.value : 2024;
+    const { raw, tokens, rawNorm } = term ? extractSearchTokens(term) : { raw: '', tokens: [], rawNorm: '' };
 
     return events.filter(e => {
       if (e.year > maxYear) return false;
@@ -285,19 +391,24 @@
       const placeNames = (e.places || []).map(id => placeMap.get(id)?.name || '').join(' ');
       const personNames = (e.people || []).map(id => personMap.get(id)?.name || '').join(' ');
       const hay = [e.title, e.summary, e.region, placeNames, personNames].join(' ').toLocaleLowerCase();
-      return hay.includes(term);
+      if (hay.includes(raw)) return true;
+      const hayNorm = normalizeBanglaPhonetics(hay);
+      if (rawNorm && hayNorm.includes(rawNorm)) return true;
+      return tokens.some(t => hay.includes(t) || (hayNorm && hayNorm.includes(t)));
     });
   }
 
   function render() {
     const chosenEvents = getFilteredEvents();
     const term = els.search ? els.search.value.trim().toLocaleLowerCase() : '';
+    const { raw, tokens, rawNorm } = term ? extractSearchTokens(term) : { raw: '', tokens: [], rawNorm: '' };
 
     const matchingPlaceIds = new Set(chosenEvents.flatMap(e => e.places || []));
 
     const matchedPlaces = places.filter(p => {
       const matchText = [p.name, p.modern, p.description].join(' ').toLocaleLowerCase();
-      const directMatch = term && matchText.includes(term);
+      const matchTextNorm = normalizeBanglaPhonetics(matchText);
+      const directMatch = term && (matchText.includes(raw) || (rawNorm && matchTextNorm.includes(rawNorm)) || tokens.some(t => matchText.includes(t) || (matchTextNorm && matchTextNorm.includes(t))));
       const eventMatch = matchingPlaceIds.has(p.id);
       return directMatch || eventMatch || (!term && matchingPlaceIds.has(p.id));
     });
