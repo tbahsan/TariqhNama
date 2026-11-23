@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#dfb86c" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#17382d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Background Disc -->
+  <circle cx="32" cy="32" r="30" fill="#17382d" stroke="#b0883b" stroke-width="2"/>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="#dfb86c" stroke-width="0.75" stroke-dasharray="2 1.5"/>
+  <circle cx="32" cy="32" r="26" fill="url(#starGlow)"/>
+  <!-- Rub el Hizb 8-pointed star -->
+  <!-- Square 1 -->
+  <rect x="14" y="14" width="36" height="36" rx="2.5" fill="#1f4b36" stroke="#dfb86c" stroke-width="2"/>
+  <!-- Square 2 rotated 45 deg -->
+  <rect x="14" y="14" width="36" height="36" rx="2.5" fill="#1f4b36" stroke="#dfb86c" stroke-width="2" transform="rotate(45 32 32)"/>
+  <!-- Inner Ornamental Ring -->
+  <circle cx="32" cy="32" r="11" fill="#17382d" stroke="#f0cf85" stroke-width="1.5"/>
+  <!-- Center Golden Star/Dot -->
+  <circle cx="32" cy="32" r="4.5" fill="#dfb86c"/>
+  <circle cx="32" cy="32" r="2" fill="#17382d"/>
+</svg>

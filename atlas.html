@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="bn">
+<head>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17382d">
+  <title>ঐতিহাসিক মানচিত্র · তারিখনামা (Tariqhnama)</title>
+  
+  <meta name="description" content="তারিখনামা ঐতিহাসিক মানচিত্র - মক্কা, মদিনা, বাগদাদ, কর্ডোভা, কায়রো, ইস্তাম্বুল ও লক্ষণাবতীর মতো ১২৬টি প্রাচীন জনপদ ও ভৌগোলিক বিস্তারের মুক্ত মানচিত্র।">
+  <meta name="keywords" content="তারিখনামা মানচিত্র, Tariqhnama Map, ইসলামিক মানচিত্র, মুসলিম ভূগোলের ইতিহাস, প্রাচীন নগরী, Leaflet Map">
+  <meta name="author" content="তাছনীম বিন আহসান (Tasneem Bin Ahsan)">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tbahsan.github.io/TariqhNama/atlas.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tbahsan.github.io/TariqhNama/atlas.html">
+  <meta property="og:title" content="ঐতিহাসিক মানচিত্র · তারিখনামা (Tariqhnama)">
+  <meta property="og:description" content="১২৬টি ঐতিহাসিক জনপদ, রাজধানী ও বাণিজ্যপথের সমন্বিত মুক্ত ভৌগোলিক মানচিত্র।">
+  <meta property="og:image" content="https://tbahsan.github.io/TariqhNama/assets/favicon.svg">
+  <meta property="og:site_name" content="তারিখনামা · Tariqhnama">
+  <meta property="og:locale" content="bn_BD">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="alternate icon" href="assets/favicon.svg">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="তারিখনামা হোম">
+    <span class="brand-text">
+      <span class="brand-title">তারিখনামা</span>
+      <small>Tariqhnama · ঐতিহাসিক ভূগোল ও মানচিত্র</small>
+    </span>
+  </a>
+
+  <nav id="main-nav" class="main-nav" aria-label="প্রধান মেনু">
+    <a href="index.html#reader">📖 পাণ্ডুলিপি</a>
+    <a href="index.html#people">👤 ব্যক্তিত্ব</a>
+    <a href="index.html#places">📍 স্থান-সংগ্রহ</a>
+    <a href="atlas.html" class="active">🗺️ পূর্ণ মানচিত্র</a>
+    <a href="index.html#sources">উৎস-নীতি</a>
+    <a href="research.html">গবেষণা</a>
+    <button type="button" class="nav-issue-btn" id="nav-feedback-trigger">💬 পরামর্শ</button>
+  </nav>
+
+  <div class="header-right">
+    <button id="header-feedback-btn" class="header-btn feedback-header-btn" type="button" title="পরামর্শ বা ঐতিহাসিক ভুল সংশোধন জানান">
+      <span>💬</span><span>পরামর্শ</span>
+    </button>
+    <a class="header-btn" href="index.html#reader">
+      <span>📖</span><span>পাণ্ডুলিপিতে ফিরুন</span>
+    </a>
+    <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="থিম পরিবর্তন করুন" title="ডার্ক ও লাইট থিম পরিবর্তন">
+      <span id="theme-icon">🌙</span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Section Heading Centered -->
+  <div class="map-page-head">
+    <p class="eyebrow"><span class="live-dot"></span> ভৌগোলিক সংযোগ · ৫৬০–২০২৪ খ্রিষ্টাব্দ · ১২৬টি ঐতিহাসিক স্থান</p>
+    <h1>সময়ের ভূদৃশ্য ও ঐতিহাসিক মানচিত্র</h1>
+    <div class="title-ornament-divider" aria-hidden="true">
+        <span class="divider-line left"></span>
+        <span class="divider-seal-wrap">
+          <span class="divider-star">✦</span>
+          <svg class="hizb-seal-icon title-seal" viewBox="0 0 24 24" width="1.2em" height="1.2em" aria-hidden="true"><rect x="5.5" y="5.5" width="13" height="13" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="5.5" y="5.5" width="13" height="13" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.8" transform="rotate(45 12 12)"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>
+          <span class="divider-star">✦</span>
+        </span>
+        <span class="divider-line right"></span>
+      </div>
+    <p class="map-page-lede">ইতিহাস কেবল সন-তারিখের তালিকা নয়, তা ভূগোলের বুকেও দৃশ্যমান। মানচিত্রের যেকোনো স্থানে ক্লিক করে দেখুন তার ঐতিহাসিক গুরুত্ব, আধুনিক স্থানাঙ্ক এবং সংশ্লিষ্ট ঘটনার পরম্পরা।</p>
+  </div>
+
+  <!-- Filter Control Bar -->
+  <div class="map-controls-card">
+    <!-- Search and Year -->
+    <div class="map-search-row">
+      <label class="map-search-box">
+        <span>⌕</span>
+        <input id="map-search" type="search" placeholder="স্থান, আধুনিক দেশ বা ঘটনা খুঁজুন... (যেমন: মক্কা, বাগদাদ, গৌড়, কর্ডোভা)" autocomplete="off">
+      </label>
+      <div class="map-year-slider-box">
+        <span>সাল পর্যন্ত: <b id="map-year-label">২০২৪</b> খ্রি.</span>
+        <input id="map-year-slider" type="range" min="560" max="2024" value="2024">
+      </div>
+      <button id="reset-map-filters" class="button ghost small-btn" type="button">ফিল্টার মুছুন</button>
+    </div>
+
+    <!-- Era Filter Pills -->
+    <div class="map-pills-group">
+      <span class="pills-title">যুগ নির্বাচন:</span>
+      <div class="pills-scroll-row" id="map-era-pills">
+        <button type="button" class="filter-pill active" data-era="all">সব যুগ</button>
+        <button type="button" class="filter-pill" data-era="prophetic_rashidun">নবুয়ত ও রাশেদীন (৫৭০–৬৬১)</button>
+        <button type="button" class="filter-pill" data-era="umayyad">উমাইয়া খিলাফত (৬৬১–৭৫০)</button>
+        <button type="button" class="filter-pill" data-era="abbasid">আব্বাসীয় স্বর্ণযুগ (৭৫০–১২৫৮)</button>
+        <button type="button" class="filter-pill" data-era="medieval_bengal">মধ্যযুগীয় বাংলা (১২০৪–১৭৫৭)</button>
+        <button type="button" class="filter-pill" data-era="andalus">আন্দালুস ও মাগরিব (৭১১–১৪৯২)</button>
+        <button type="button" class="filter-pill" data-era="ottoman">উসমানীয় ও মামলুক (১২৯৯–১৯২৪)</button>
+        <button type="button" class="filter-pill" data-era="modern">ঔপনিবেশিক ও আধুনিক যুগ (১৭৫৭–২০২৪)</button>
+      </div>
+    </div>
+
+    <!-- Region Filter Pills -->
+    <div class="map-pills-group">
+      <span class="pills-title">অঞ্চল নির্বাচন:</span>
+      <div class="pills-scroll-row" id="map-region-pills">
+        <button type="button" class="filter-pill active" data-region="all">সব অঞ্চল</button>
+        <button type="button" class="filter-pill" data-region="বাংলা">বাংলা</button>
+        <button type="button" class="filter-pill" data-region="শাম ও লেভান্ট">শাম ও লেভান্ট</button>
+        <button type="button" class="filter-pill" data-region="ইরাক ও মেসোপটেমিয়া">ইরাক ও মেসোপটেমিয়া</button>
+        <button type="button" class="filter-pill" data-region="আরব উপদ্বীপ">আরব উপদ্বীপ</button>
+        <button type="button" class="filter-pill" data-region="আন্দালুস">আন্দালুস</button>
+        <button type="button" class="filter-pill" data-region="আনাতোলিয়া ও বলকান">আনাতোলিয়া ও বলকান</button>
+        <button type="button" class="filter-pill" data-region="উত্তর আফ্রিকা ও মিশর">উত্তর আফ্রিকা ও মিশর</button>
+        <button type="button" class="filter-pill" data-region="পারস্য ও মধ্য এশিয়া">পারস্য ও মধ্য এশিয়া</button>
+        <button type="button" class="filter-pill" data-region="ভারত ও দক্ষিণ এশিয়া">ভারত ও দক্ষিণ এশিয়া</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Tab Switcher (Visible on Mobile only) -->
+  <div class="atlas-mobile-tabs" role="tablist">
+    <button type="button" class="atlas-tab-btn active" data-atlas-tab="map">🗺️ মানচিত্র দেখুন</button>
+    <button type="button" class="atlas-tab-btn" data-atlas-tab="drawer">📍 স্থান তালিকা (<span id="mobile-places-badge">১২৬</span>)</button>
+  </div>
+
+  <!-- Interactive Map Stage & Compact Places Drawer -->
+  <div class="atlas-workspace">
+    <!-- Map Left Column -->
+    <div class="atlas-map-column" id="atlas-map-pane">
+      <div class="map-view-shell">
+        <div id="interactive-map" class="interactive-map" aria-label="ঐতিহাসিক মানচিত্র"></div>
+        <!-- Fallback SVG map if leaflet is unavailable -->
+        <svg id="world-map" class="fallback-svg-map" viewBox="0 0 1000 500" role="img" aria-label="বিকল্প মানচিত্র" hidden></svg>
+        <div id="map-tooltip" class="map-tooltip" hidden></div>
+        <div class="map-legend-overlay">
+          <span><i class="legend-pin"></i> চিহ্নিত ঐতিহাসিক স্থান</span>
+          <span><b>ⓘ</b> যেকোনো পিনে ক্লিক করে বিস্তারিত জানুন</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Places Drawer Right Column -->
+    <aside class="atlas-places-drawer" id="atlas-drawer-pane">
+      <div class="drawer-header">
+        <div class="drawer-header-title">
+          <h3>📍 ঐতিহাসিক স্থান-তালিকা</h3>
+          <span class="drawer-count-badge" id="map-result-count">১২৬টি স্থান</span>
+        </div>
+        <div class="drawer-search-box">
+          <span class="search-icon">⌕</span>
+          <input type="search" id="drawer-search" placeholder="স্থান দ্রুত খুঁজুন... (যেমন: মক্কা, কর্ডোভা)" autocomplete="off">
+        </div>
+      </div>
+      <div id="place-cards" class="drawer-cards-list"></div>
+    </aside>
+  </div>
+
+    <!-- Sister Project Showcase: Akhirah Archive -->
+  
+
+    <!-- Royal Colophon Footer (খাতমে কিতাব) -->
+  <footer class="royal-colophon-footer" id="colophon">
+    <div class="colophon-inner">
+      <!-- Illuminated Arch Header -->
+      <div class="colophon-ornament-header">
+        <span class="colophon-rule"></span>
+        <div class="colophon-seal">
+          <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <rect x="7" y="7" width="18" height="18" rx="2" stroke="var(--gold)" fill="var(--paper-2)"/>
+            <rect x="7" y="7" width="18" height="18" rx="2" stroke="var(--gold)" fill="none" transform="rotate(45 16 16)"/>
+            <circle cx="16" cy="16" r="3" fill="var(--gold)"/>
+          </svg>
+          <span class="colophon-kicker">খাতমে কিতাব · সমাপনী ও উৎস-স্বত্ব</span>
+        </div>
+        <span class="colophon-rule"></span>
+      </div>
+
+      <!-- Tri-Column Colophon Body -->
+      <div class="colophon-grid">
+        <!-- Column 1: Identity & Philosophy -->
+        <div class="colophon-col colophon-identity">
+          <h3 class="colophon-title">তারিখনামা · Tariqhnama</h3>
+          <p class="colophon-tagline">সময়, মানুষ ও ভূগোলের জীবন্ত ঐতিহাসিক পাণ্ডুলিপি</p>
+          <p class="colophon-summary">
+            প্রাক-ইসলামি যুগ থেকে খেলাফতের সমাপ্তি (৫৬০–১৯২৪ খ্রি.) পর্যন্ত মুসলিম সভ্যতার ২১৯টি ঐতিহাসিক ঘটনা, ২২১ জন মনীষী ও ১২৬টি স্থান নিয়ে গঠিত উন্মুক্ত গবেষণামূলক ডিজিটাল সংকলন।
+          </p>
+          <div class="colophon-licenses">
+            <span class="license-badge">কোড MIT লাইসেন্স</span>
+            <span class="license-badge">উপাত্ত CC BY 4.0</span>
+          </div>
+        </div>
+
+        <!-- Column 2: Curator & Sister Project -->
+        <div class="colophon-col colophon-curator">
+          <div class="curator-card-inner">
+            <span class="curator-role-label">সার্বিক পরিকল্পনা, নির্দেশনা ও পরিচালনা</span>
+            <h4 class="curator-lead-name">
+              <a href="https://github.com/tbahsan" target="_blank" rel="noopener noreferrer">তাছনীম বিন আহসান (@tbahsan)</a>
+            </h4>
+            <p class="curator-text">
+              ঐতিহাসিক উপাত্তের কাঠামো নির্ধারণ ও মানবিক গবেষণা তদারকি। প্রকল্পটি কৃত্রিম বুদ্ধিমত্তার (AI) প্রযুক্তিগত সহযোগিতায় সংকলিত এবং প্রতিটি স্তর প্রামাণ্য সূত্রের সাথে যাচাইকৃত।
+            </p>
+          </div>
+
+          <!-- Sister Project Akhirah Archive Integration -->
+          <div class="sister-colophon-box">
+            <div class="sister-box-head">
+              <span class="sister-mini-tag">সহযোগী ইসলামিক প্রকল্প</span>
+              <a href="https://tbahsan.github.io/AkhirahArchive/" target="_blank" rel="noopener noreferrer" class="sister-box-link">
+                <strong>আখিরাহ আর্কাইভ (Akhirah Archive) ↗</strong>
+              </a>
+            </div>
+            <p class="sister-box-desc">
+              মৃত্যুপরবর্তী জীবন, বরযখ ও পরকালের নির্ভরযোগ্য দলিলের উন্মুক্ত ডিজিটাল আর্কাইভ।
+            </p>
+          </div>
+        </div>
+
+        <!-- Column 3: Feedback, Issues & Quick Navigation -->
+        <div class="colophon-col colophon-actions">
+          <h4 class="colophon-col-heading">পরামর্শ ও ঐতিহাসিক অসঙ্গতি সংশোধন</h4>
+          <p class="colophon-action-desc">
+            ইতিহাস একটি প্রবহমান জ্ঞানধারা। কোনো সন-তারিখ বা তথ্যে অসঙ্গতি চোখে পড়লে সাইট থেকেই সহজে ফর্ম পূরণ করে গিটহাবে পাঠান।
+          </p>
+
+          <div class="colophon-btn-group">
+            <button type="button" class="colophon-action-btn primary" id="open-feedback-composer">
+              <span>💬</span><span>পরামর্শ বা ভুল সংশোধন জানান</span>
+            </button>
+            <a href="https://github.com/tbahsan/TariqhNama/issues" target="_blank" rel="noopener noreferrer" class="colophon-action-btn secondary">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+              <span>GitHub Repository ↗</span>
+            </a>
+          </div>
+
+          <div class="colophon-quick-nav">
+            <span class="quick-nav-label">দ্রুত সূচি:</span>
+            <a href="index.html#reader">পাণ্ডুলিপি</a> ·
+            <a href="index.html#people">ব্যক্তিত্ব</a> ·
+            <a href="index.html#places">স্থান-সংগ্রহ</a> ·
+            <a href="atlas.html">মানচিত্র</a> ·
+            <a href="index.html#sources">উৎস-নীতি</a> ·
+            <a href="research.html">গবেষণা</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="colophon-bottom-bar">
+        <span>তারিখনামা · Tariqhnama · উন্মুক্ত মুসলিম ইতিহাসের বিশ্বস্ত ডিজিটাল আকর</span>
+        <span>সার্বিক পরিচালনা: তাছনীম বিন আহসান · সর্বস্বত্ব উন্মুক্ত জ্ঞানের জন্য উন্মুক্ত</span>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- Place Detail Dialog -->
+<dialog id="detail-dialog" aria-labelledby="dialog-title">
+  <button id="dialog-close" class="dialog-close" type="button" aria-label="বন্ধ করুন">×</button>
+  <div id="detail-content"></div>
+</dialog>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="app.js" defer></script>
+<!-- Interactive Feedback & Issue Composer Dialog -->
+<dialog id="feedback-dialog" class="feedback-dialog" aria-labelledby="feedback-dialog-title">
+  <button id="feedback-close" class="dialog-close" type="button" aria-label="বন্ধ করুন">×</button>
+  
+  <div class="feedback-modal-header">
+    <div class="feedback-modal-title-wrap">
+      <span class="feedback-seal">💬</span>
+      <div>
+        <h2 id="feedback-dialog-title">পরামর্শ বা ঐতিহাসিক ভুল সংশোধন পাঠান</h2>
+        <small>তারিখনামা একটি উন্মুক্ত গবেষণার ক্ষেত্র · আপনার প্রতিটি পর্যবেক্ষণ মূল্যবান</small>
+      </div>
+    </div>
+  </div>
+
+  <form id="feedback-composer-form" class="feedback-form" onsubmit="return false;">
+    <div class="feedback-form-group">
+      <label for="feedback-category">বিষয় / ইস্যুর ধরন:</label>
+      <select id="feedback-category" class="feedback-input select">
+        <option value="correction">🔴 ঐতিহাসিক তথ্যের ভুল / সন-তারিখ সংশোধন</option>
+        <option value="proposal">🟢 নতুন ব্যক্তিত্ব বা ঐতিহাসিক ঘটনার অন্তর্ভুক্তি প্রস্তাব</option>
+        <option value="map">🟡 মানচিত্রের স্থান বা স্থানাঙ্ক সংক্রান্ত বিষয়</option>
+        <option value="typo">🔵 বানান, ব্যাকরণ বা ভাষাগত পরিমার্জন</option>
+        <option value="general">💡 সাধারণ পরামর্শ ও ফিচার রিকোয়েস্ট</option>
+      </select>
+    </div>
+
+    <div class="feedback-form-group">
+      <label for="feedback-title">সংক্ষিপ্ত শিরোনাম:</label>
+      <input type="text" id="feedback-title" class="feedback-input" placeholder="যেমন: সালাহুদ্দিন আইয়ুবীর জন্মসনের তথ্য যাচাই" required>
+    </div>
+
+    <div class="feedback-form-group">
+      <label for="feedback-content">বিস্তারিত বিবরণ বা পর্যবেক্ষণ:</label>
+      <textarea id="feedback-content" class="feedback-input textarea" rows="4" placeholder="কোথায় অসঙ্গতি পেয়েছেন এবং সঠিক তথ্য কী হওয়া উচিত তা সংক্ষেপে লিখুন..." required></textarea>
+    </div>
+
+    <div class="feedback-form-group">
+      <label for="feedback-sources">তথ্যসূত্র / আকর গ্রন্থ (যদি থাকে):</label>
+      <input type="text" id="feedback-sources" class="feedback-input" placeholder="যেমন: আল-বিদায়া ওয়ান নিহায়া (ইবনে কাসীর), ৭ম খণ্ড, পৃষ্ঠা...">
+    </div>
+
+    <div class="feedback-modal-actions">
+      <button type="button" id="feedback-submit-github" class="feedback-submit-btn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span>গিটহাবে প্রি-ফিল্ড ইস্যু খুলুন ↗</span>
+      </button>
+      <button type="button" id="feedback-copy-template" class="feedback-secondary-btn">টেমপ্লেট কপি করুন</button>
+    </div>
+    <div id="feedback-status" class="feedback-status" style="display:none;"></div>
+  </form>
+</dialog>
+
+</body>
+</html>
