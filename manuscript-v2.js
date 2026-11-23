@@ -198,7 +198,7 @@
     initFeedbackComposer();
       const data = await loadData();
       events = [...data.events].sort((a, b) => a.year - b.year || String(a.id).localeCompare(String(b.id)));
-      people = [...data.people].sort((a, b) => (a.sortYear || 9999) - (b.sortYear || 9999));
+      people = [...data.people].sort((a, b) => (a.id === 'muhammad' ? -1 : b.id === 'muhammad' ? 1 : (a.sortYear || 9999) - (b.sortYear || 9999)));
       places = [...data.places];
       sources = [...data.sources];
       personMap = new Map(people.map(p => [p.id, p]));
@@ -1199,7 +1199,7 @@
         .join(' ').toLocaleLowerCase();
       return (group === 'all' || person.group === group) && (!needle || text.includes(needle));
     }).sort((a, b) => (ui.peopleSort && ui.peopleSort.value === 'name')
-      ? a.name.localeCompare(b.name, 'bn') : (a.sortYear || 9999) - (b.sortYear || 9999));
+      ? a.name.localeCompare(b.name, 'bn') : (a.id === 'muhammad' ? -1 : b.id === 'muhammad' ? 1 : (a.sortYear || 9999) - (b.sortYear || 9999)));
 
     if (ui.peopleResult) ui.peopleResult.textContent = `${bn(result.length)} জন · নাম বেছে পড়ুন`;
     if (!result.some(p => p.id === activePersonId)) activePersonId = result[0]?.id || null;
